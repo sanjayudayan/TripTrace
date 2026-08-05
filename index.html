@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="TripTrace — The world's most beautiful travel logging app"/>
+  <title>TripTrace — Log Every Journey</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/landing.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">🌍 Trip<span>Trace</span></div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#stats">Stats</a>
+      </div>
+      <div class="nav-cta">
+        <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+        <a href="login.html?mode=signup" class="btn btn-primary btn-sm">Get Started Free</a>
+      </div>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="login.html">Login</a>
+      <a href="login.html?mode=signup" class="btn btn-primary btn-sm">Get Started Free</a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+      <div class="hero-orb orb-3"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge animate-fadeInUp">
+        ✨ The #1 Travel Logging App of 2025
+      </div>
+      <h1 class="hero-title animate-fadeInUp delay-1">
+        Every Journey<br/>Deserves to be<br/>
+        <span class="gradient-text">Remembered</span>
+      </h1>
+      <p class="hero-sub animate-fadeInUp delay-2">
+        Log your trips, capture memories, track expenses, and share adventures
+        with the world — all in one beautifully designed app.
+      </p>
+      <div class="hero-actions animate-fadeInUp delay-3">
+        <a href="login.html?mode=signup" class="btn btn-primary btn-lg">
+          🚀 Start For Free
+        </a>
+        <a href="#how-it-works" class="btn btn-outline btn-lg">
+          ▶ Watch Demo
+        </a>
+      </div>
+      <div class="hero-stats animate-fadeInUp delay-4">
+        <div class="hero-stat">
+          <span class="stat-num">50K+</span>
+          <span class="stat-label">Travelers</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="hero-stat">
+          <span class="stat-num">200K+</span>
+          <span class="stat-label">Trips Logged</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="hero-stat">
+          <span class="stat-num">150+</span>
+          <span class="stat-label">Countries</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual animate-float">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="mock-nav">🌍 TripTrace</div>
+          <div class="mock-map">🗺️</div>
+          <div class="mock-card">
+            <div class="mock-dot"></div>
+            <div class="mock-lines">
+              <div class="mock-line w80"></div>
+              <div class="mock-line w50"></div>
+            </div>
+          </div>
+          <div class="mock-card">
+            <div class="mock-dot" style="background:#43E97B"></div>
+            <div class="mock-lines">
+              <div class="mock-line w60"></div>
+              <div class="mock-line w40"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-indicator">
+        <div class="scroll-dot"></div>
+      </div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-tag">✦ Features</p>
+        <h2 class="section-title">Everything You Need<br/>for the Perfect Trip</h2>
+        <p class="section-sub">From planning to memories, TripTrace covers every step of your journey.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card card animate-fadeInUp">
+          <div class="feature-icon">📍</div>
+          <h3>Smart Location Logging</h3>
+          <p>Auto-detect your GPS location or search any place on the map. Every stop is pinned perfectly.</p>
+        </div>
+        <div class="feature-card card animate-fadeInUp delay-1">
+          <div class="feature-icon">📸</div>
+          <h3>Photo Memories</h3>
+          <p>Upload unlimited photos per trip. Create visual albums that tell your story beautifully.</p>
+        </div>
+        <div class="feature-card card animate-fadeInUp delay-2">
+          <div class="feature-icon">🌤️</div>
+          <h3>Live Weather</h3>
+          <p>Get real-time weather for any trip location so you're always prepared for what's ahead.</p>
+        </div>
+        <div class="feature-card card animate-fadeInUp delay-3">
+          <div class="feature-icon">💸</div>
+          <h3>Expense Tracker</h3>
+          <p>Track every rupee spent on your trip. See breakdowns by category and total trip cost.</p>
+        </div>
+        <div class="feature-card card animate-fadeInUp">
+          <div class="feature-icon">🗺️</div>
+          <h3>Interactive Map</h3>
+          <p>See all your trips beautifully visualized on a world map. Your travel footprint at a glance.</p>
+        </div>
+        <div class="feature-card card animate-fadeInUp delay-1">
+          <div class="feature-icon">🔗</div>
+          <h3>Share Adventures</h3>
+          <p>Share your trip with a unique link. Let friends and family follow your journey in real time.</p>
+        </div>
+        <div class="feature-card card animate-fadeInUp delay-2">
+          <div class="feature-icon">📋</div>
+          <h3>Trip History</h3>
+          <p>A beautiful, searchable archive of every trip you've ever taken — all in one place.</p>
+        </div>
+        <div class="feature-card card animate-fadeInUp delay-3">
+          <div class="feature-icon">📴</div>
+          <h3>Offline Support</h3>
+          <p>Log trips even without internet. Your data syncs automatically when you're back online.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-tag">✦ How It Works</p>
+        <h2 class="section-title">Start Logging in<br/>3 Simple Steps</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon">👤</div>
+          <h3>Create Account</h3>
+          <p>Sign up free in under 30 seconds. No credit card needed.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon">✈️</div>
+          <h3>Log Your Trip</h3>
+          <p>Add location, photos, notes, weather and expenses for any trip.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon">🌍</div>
+          <h3>Relive & Share</h3>
+          <p>View on your world map and share your adventures with anyone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS SECTION -->
+  <section class="stats-section" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="big-stat">50K+</div>
+          <div class="stat-desc">Active Travelers</div>
+        </div>
+        <div class="stat-card">
+          <div class="big-stat">200K+</div>
+          <div class="stat-desc">Trips Logged</div>
+        </div>
+        <div class="stat-card">
+          <div class="big-stat">150+</div>
+          <div class="stat-desc">Countries Covered</div>
+        </div>
+        <div class="stat-card">
+          <div class="big-stat">4.9⭐</div>
+          <div class="stat-desc">Average Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-orb"></div>
+        <p class="section-tag">✦ Start Today</p>
+        <h2 class="section-title">Ready to Log Your<br/>Next Adventure?</h2>
+        <p class="section-sub" style="margin:0 auto 32px;">
+          Join thousands of travelers already using TripTrace to capture their journeys.
+        </p>
+        <a href="login.html?mode=signup" class="btn btn-accent btn-lg">
+          🚀 Create Free Account
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">🌍 Trip<span>Trace</span></div>
+          <p>Log every journey. Relive every memory.</p>
+        </div>
+        <div class="footer-links">
+          <div class="link-group">
+            <h4>Product</h4>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="login.html">Login</a>
+          </div>
+          <div class="link-group">
+            <h4>Built For</h4>
+            <a href="#">SIH 2025</a>
+            <a href="#">PS: SIH25082</a>
+            <a href="#">VSB Engineering College</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 TripTrace. Built with ❤️ for Smart India Hackathon 2025.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    }
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.animate-fadeInUp').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

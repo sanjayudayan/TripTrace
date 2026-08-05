@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trip Map - TripTrace</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    #fullmap {
+      width: 100%;
+      height: calc(100vh - 200px);
+      border-radius: 18px;
+      border: 1px solid var(--dark-border);
+    }
+    .map-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .map-stat {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+    .map-stat .val {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      display: block;
+    }
+    .map-stat .lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .map-legend {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .page-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .no-trips-map {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .no-trips-map .empty-icon {
+      font-size: 64px;
+      display: block;
+      margin-bottom: 16px;
+    }
+    .no-trips-map h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body class="app-body">
+<div class="app-layout">
+
+  <!-- TOP NAV -->
+  <div class="top-nav">
+    <div class="nav-brand">
+      <span class="brand-icon">🌍</span>
+      <div>
+        <div class="nav-brand .brand-text">Trip<span style="color:var(--primary)">Trace</span></div>
+        <div class="nav-subtitle">Your world map</div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-sm btn-outline" onclick="logoutUser()">Logout</button>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+
+    <div class="page-title">🗺️ Trip Map</div>
+
+    <!-- Map Stats -->
+    <div class="map-stats">
+      <div class="map-stat">
+        <span class="val" id="map-trip-count">0</span>
+        <span class="lbl">Trips Pinned</span>
+      </div>
+      <div class="map-stat">
+        <span class="val" id="map-city-count">0</span>
+        <span class="lbl">Cities Visited</span>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="map-legend">
+      <span>📍 Map Legend:</span>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#6C63FF;"></div>
+        <span>Your Trips</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#43E97B;"></div>
+        <span>Most Recent</span>
+      </div>
+    </div>
+
+    <!-- Full Map -->
+    <div id="fullmap"></div>
+
+    <!-- No trips message (hidden by default) -->
+    <div id="no-trips-msg" class="no-trips-map" style="display:none;">
+      <span class="empty-icon">🗺️</span>
+      <h3>No Trips on Map Yet</h3>
+      <p>Log your first trip to see it appear here!</p>
+      <a href="logger.html" class="btn btn-primary" style="margin-top:16px; display:inline-flex;">
+        ➕ Log First Trip
+      </a>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <a href="logger.html" class="nav-item">
+      <span class="nav-icon">➕</span> Log Trip
+    </a>
+    <a href="history.html" class="nav-item">
+      <span class="nav-icon">📋</span> History
+    </a>
+    <a href="map.html" class="nav-item active">
+      <span class="nav-icon">🗺️</span> Map
+    </a>
+  </div>
+
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
+
+<!-- Google Maps — Replace YOUR_API_KEY -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initFullMap" async defer></script>
+<script src="js/map.js"></script>
+</body>
+</html>

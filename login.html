@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - TripTrace</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    body {
+      background: var(--gradient-hero);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .auth-wrapper {
+      width: 100%;
+      max-width: 420px;
+    }
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .auth-logo .logo-icon { font-size: 48px; display: block; margin-bottom: 8px; }
+    .auth-logo h1 { font-size: 28px; font-weight: 800; }
+    .auth-logo h1 span { color: var(--primary); }
+    .auth-logo p { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+    .auth-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--dark-border);
+      border-radius: 24px;
+      padding: 36px 32px;
+      backdrop-filter: blur(20px);
+    }
+    .auth-tabs {
+      display: flex;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 28px;
+      gap: 4px;
+    }
+    .auth-tab {
+      flex: 1; padding: 10px;
+      border: none; border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .auth-tab.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(108,99,255,0.4);
+    }
+    .auth-form { display: none; }
+    .auth-form.active { display: block; }
+    .error-msg {
+      background: rgba(255,101,132,0.1);
+      border: 1px solid rgba(255,101,132,0.3);
+      color: var(--secondary);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .error-msg.show { display: block; }
+    .success-msg {
+      background: rgba(67,233,123,0.1);
+      border: 1px solid rgba(67,233,123,0.3);
+      color: var(--accent);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .success-msg.show { display: block; }
+    .divider {
+      display: flex; align-items: center;
+      gap: 12px; margin: 20px 0;
+      color: var(--text-muted); font-size: 12px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1;
+      height: 1px; background: var(--dark-border);
+    }
+    .btn-google {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--dark-border);
+      color: white;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+    .btn-google:hover { background: rgba(255,255,255,0.12); }
+    .back-home {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .back-home a { color: var(--primary); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <div class="auth-wrapper">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <span class="logo-icon">🌍</span>
+      <h1>Trip<span>Trace</span></h1>
+      <p>Your personal travel companion</p>
+    </div>
+
+    <!-- Auth Box -->
+    <div class="auth-box">
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+        <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+
+      <!-- Error / Success -->
+      <div class="error-msg" id="error-msg"></div>
+      <div class="success-msg" id="success-msg"></div>
+
+      <!-- LOGIN FORM -->
+      <div class="auth-form active" id="login-form">
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" id="login-email" placeholder="you@email.com" class="input-field"/>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="Enter your password" class="input-field"/>
+        </div>
+        <button onclick="loginUser()" class="btn btn-primary btn-full" id="login-btn">
+          Login to TripTrace
+        </button>
+        <div class="divider">or continue with</div>
+        <button onclick="googleLogin()" class="btn-google">
+          <img src="https://www.google.com/favicon.ico" width="18"/> 
+          Continue with Google
+        </button>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div class="auth-form" id="signup-form">
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" id="signup-name" placeholder="Your full name" class="input-field"/>
+        </div>
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" id="signup-email" placeholder="you@email.com" class="input-field"/>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="signup-password" placeholder="Min 6 characters" class="input-field"/>
+        </div>
+        <button onclick="signupUser()" class="btn btn-primary btn-full" id="signup-btn">
+          Create Free Account
+        </button>
+        <div class="divider">or continue with</div>
+        <button onclick="googleLogin()" class="btn-google">
+          <img src="https://www.google.com/favicon.ico" width="18"/>
+          Continue with Google
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Back to Home -->
+    <div class="back-home">
+      <a href="index.html">← Back to Home</a>
+    </div>
+
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="js/firebase.js"></script>
+
+  <script>
+    // Switch between Login and Signup tabs
+    function switchTab(tab) {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+      document.getElementById(tab + '-form').classList.add('active');
+      event.target.classList.add('active');
+      clearMessages();
+    }
+
+    function clearMessages() {
+      document.getElementById('error-msg').classList.remove('show');
+      document.getElementById('success-msg').classList.remove('show');
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      el.innerText = '❌ ' + msg;
+      el.classList.add('show');
+    }
+
+    function showSuccess(msg) {
+      const el = document.getElementById('success-msg');
+      el.innerText = '✅ ' + msg;
+      el.classList.add('show');
+    }
+
+    // LOGIN
+    function loginUser() {
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const btn      = document.getElementById('login-btn');
+      clearMessages();
+
+      if (!email || !password) { showError('Please fill in all fields.'); return; }
+
+      btn.innerHTML = '<span class="loader"></span> Logging in...';
+      btn.disabled  = true;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => { window.location.href = 'logger.html'; })
+        .catch((err) => {
+          showError(err.message);
+          btn.innerHTML = 'Login to TripTrace';
+          btn.disabled  = false;
+        });
+    }
+
+    // SIGNUP
+    function signupUser() {
+      const name     = document.getElementById('signup-name').value.trim();
+      const email    = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const btn      = document.getElementById('signup-btn');
+      clearMessages();
+
+      if (!name || !email || !password) { showError('Please fill in all fields.'); return; }
+      if (password.length < 6) { showError('Password must be at least 6 characters.'); return; }
+
+      btn.innerHTML = '<span class="loader"></span> Creating account...';
+      btn.disabled  = true;
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((cred) => cred.user.updateProfile({ displayName: name }))
+        .then(() => {
+          showSuccess('Account created! Redirecting...');
+          setTimeout(() => { window.location.href = 'logger.html'; }, 1500);
+        })
+        .catch((err) => {
+          showError(err.message);
+          btn.innerHTML = 'Create Free Account';
+          btn.disabled  = false;
+        });
+    }
+
+    // GOOGLE LOGIN
+    function googleLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(() => { window.location.href = 'logger.html'; })
+        .catch((err) => { showError(err.message); });
+    }
+
+    // Auto redirect if already logged in
+    auth.onAuthStateChanged((user) => {
+      if (user) window.location.href = 'logger.html';
+    });
+
+    // Check if signup mode from URL
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'signup') switchTab('signup');
+  </script>
+
+</body>
+</html>
