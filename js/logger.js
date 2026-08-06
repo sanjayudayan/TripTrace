@@ -5,67 +5,59 @@ let currentAddr = '';
 
 // ===== INIT MAP =====
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 20.5937, lng: 78.9629 },
-    zoom: 5,
-    mapTypeControl: false,
-    streetViewControl: false,
-    fullscreenControl: false,
-    styles: [
-      { elementType: 'geometry',
-        stylers: [{ color: '#1a1a3e' }] },
-      { elementType: 'labels.text.fill',
-        stylers: [{ color: '#8ec3b9' }] },
-      { elementType: 'labels.text.stroke',
-        stylers: [{ color: '#1a3646' }] },
-      { featureType: 'water',
-        elementType: 'geometry',
-        stylers: [{ color: '#0d1b2a' }] },
-      { featureType: 'road',
-        elementType: 'geometry',
-        stylers: [{ color: '#304a7d' }] },
-    ]
-  });
+  map = L.map('map').setView([20.5937, 78.9629], 5);
 
-  map.addListener('click', (e) => {
-    placeMarker(e.latLng.lat(), e.latLng.lng());
-    reverseGeocode(e.latLng.lat(), e.latLng.lng());
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Click on map to set location
+  map.on('click', function(e) {
+    placeMarker(e.latlng.lat, e.latlng.lng);
+    reverseGeocode(e.latlng.lat, e.latlng.lng);
   });
 }
 
 // ===== PLACE MARKER =====
 function placeMarker(lat, lng) {
-  if (marker) marker.setMap(null);
-  marker = new google.maps.Marker({
-    position : { lat, lng },
-    map      : map,
-    animation: google.maps.Animation.DROP,
-    icon: {
-      path        : google.maps.SymbolPath.CIRCLE,
-      scale       : 10,
-      fillColor   : '#6C63FF',
-      fillOpacity : 1,
-      strokeColor : '#ffffff',
-      strokeWeight: 2,
-    }
-  });
-  map.setCenter({ lat, lng });
-  map.setZoom(13);
+  if (marker) map.removeLayer(marker);
+
+  marker = L.marker([lat, lng], {
+    icon: L.divIcon({
+      className: '',
+      html: `<div style="
+        width:20px; height:20px;
+        background:#6C63FF;
+        border-radius:50%;
+        border:3px solid white;
+        box-shadow:0 0 10px rgba(108,99,255,0.8);">
+      </div>`,
+      iconSize: [20, 20],
+      iconAnchor: [10, 10]
+    })
+  }).addTo(map);
+
+  map.setView([lat, lng], 13);
   currentLat = lat;
   currentLng = lng;
 }
 
 // ===== REVERSE GEOCODE =====
-function reverseGeocode(lat, lng) {
-  const geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ location: { lat, lng } }, (results, status) => {
-    if (status === 'OK' && results[0]) {
-      currentAddr = results[0].formatted_address;
-      document.getElementById('location-display').innerHTML =
-        '📍 ' + currentAddr;
-      fetchWeather(lat, lng);
-    }
-  });
+async function reverseGeocode(lat, lng) {
+  try {
+    const res  = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+    );
+    const data = await res.json();
+    currentAddr = data.display_name || `${lat}, ${lng}`;
+    document.getElementById('location-display').innerHTML =
+      '📍 ' + currentAddr;
+    fetchWeather(lat, lng);
+  } catch (err) {
+    currentAddr = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+    document.getElementById('location-display').innerHTML =
+      '📍 ' + currentAddr;
+  }
 }
 
 // ===== DETECT LOCATION =====
@@ -172,9 +164,10 @@ async function saveTrip() {
     document.getElementById('photo-preview').innerHTML = '';
     document.getElementById('expense-list').innerHTML  = '';
     document.getElementById('total-amount').innerText  = '₹0';
-    document.getElementById('location-display').innerHTML = '📍 Location will appear here after detection';
+    document.getElementById('location-display').innerHTML =
+      '📍 Location will appear here after detection';
     document.getElementById('weather-box').classList.remove('show');
-    if (marker) marker.setMap(null);
+    if (marker) map.removeLayer(marker);
     currentLat = null; currentLng = null; currentAddr = '';
 
     setTimeout(() => { msgEl.innerHTML = ''; }, 5000);
@@ -185,3 +178,6 @@ async function saveTrip() {
     btn.disabled  = false;
   }
 }
+
+// Initialize map when page loads
+window.onload = initMap;
