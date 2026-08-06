@@ -3,7 +3,7 @@
 // from openweathermap.org
 // =============================================
 
-const WEATHER_API_KEY = 'YOUR_WEATHER_API_KEY';
+const WEATHER_API_KEY = '7f73dfc9f1be09099d32ba4f87f2bef9';
 
 async function fetchWeather(lat, lng) {
   try {
