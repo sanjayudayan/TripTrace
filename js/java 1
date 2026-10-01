@@ -1,0 +1,8 @@
+package JAVA;
+import java.util.Scanner;
+public class posneg{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in)
+        
+    }
+} 

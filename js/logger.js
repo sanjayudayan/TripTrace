@@ -104,10 +104,25 @@ function previewPhotos(event) {
   });
 }
 
-// ===== UPLOAD PHOTOS =====
 async function uploadPhotos(userId) {
-  // Storage disabled - return empty array
-  return [];
+  const files   = document.getElementById('photo-input').files;
+  const urls    = [];
+  const CLOUD   = 'YOUR_CLOUDINARY_CLOUD_NAME';
+
+  for (let i = 0; i < files.length; i++) {
+    const formData = new FormData();
+    formData.append('file', files[i]);
+    formData.append('upload_preset', 'triptrace_upload');
+    formData.append('folder', `trips/${userId}`);
+
+    const res  = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`,
+      { method: 'POST', body: formData }
+    );
+    const data = await res.json();
+    urls.push(data.secure_url);
+  }
+  return urls;
 }
 
 // ===== SAVE TRIP =====
