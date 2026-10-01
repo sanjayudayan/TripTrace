@@ -105,9 +105,9 @@ function previewPhotos(event) {
 }
 
 async function uploadPhotos(userId) {
-  const files   = document.getElementById('photo-input').files;
-  const urls    = [];
-  const CLOUD   = 'YOUR_CLOUDINARY_CLOUD_NAME';
+  const files  = document.getElementById('photo-input').files;
+  const urls   = [];
+  const CLOUD  = 'oi82iqdh';
 
   for (let i = 0; i < files.length; i++) {
     const formData = new FormData();
