@@ -3,6 +3,125 @@ let currentLat  = null;
 let currentLng  = null;
 let currentAddr = '';
 
+// ===== PLACE SEARCH =====
+let searchTimeout;
+
+async function searchPlaces(query) {
+  const dropdown = document.getElementById('places-dropdown');
+
+  if (query.length < 2) {
+    dropdown.style.display = 'none';
+    return;
+  }
+
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(async () => {
+    try {
+      const res  = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=6&addressdetails=1`
+      );
+      const data = await res.json();
+
+      if (data.length === 0) {
+        dropdown.style.display = 'none';
+        return;
+      }
+
+      dropdown.innerHTML = '';
+      dropdown.style.display = 'block';
+
+      data.forEach((place) => {
+        const item = document.createElement('div');
+        item.style.cssText = `
+          padding: 12px 16px;
+          cursor: pointer;
+          font-size: 13px;
+          color: white;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          transition: background 0.2s;
+        `;
+
+        const type = place.type || place.class || 'place';
+        const icon = getPlaceIcon(type);
+        const name = place.display_name;
+
+        item.innerHTML = `
+          <span style="font-size:16px;">${icon}</span>
+          <div>
+            <div style="font-weight:600; color:white;">
+              ${place.name || name.split(',')[0]}
+            </div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.5);">
+              ${name.split(',').slice(1, 3).join(',')}
+            </div>
+          </div>`;
+
+        item.addEventListener('mouseover', () => {
+          item.style.background = 'rgba(108,99,255,0.2)';
+        });
+        item.addEventListener('mouseout', () => {
+          item.style.background = 'transparent';
+        });
+
+        item.addEventListener('click', () => {
+          document.getElementById('trip-destination').value = name;
+          dropdown.style.display = 'none';
+
+          // Auto place marker on map
+          placeMarker(parseFloat(place.lat), parseFloat(place.lon));
+          currentAddr = name;
+          currentLat  = parseFloat(place.lat);
+          currentLng  = parseFloat(place.lon);
+          document.getElementById('location-display').innerHTML =
+            '📍 ' + name;
+          fetchWeather(parseFloat(place.lat), parseFloat(place.lon));
+        });
+
+        dropdown.appendChild(item);
+      });
+
+    } catch (err) {
+      dropdown.style.display = 'none';
+    }
+  }, 400);
+}
+
+// ===== PLACE ICON =====
+function getPlaceIcon(type) {
+  const icons = {
+    city        : '🏙️',
+    town        : '🏘️',
+    village     : '🏡',
+    country     : '🌍',
+    state       : '📍',
+    district    : '📍',
+    airport     : '✈️',
+    beach       : '🏖️',
+    mountain    : '🏔️',
+    park        : '🌿',
+    hotel       : '🏨',
+    restaurant  : '🍜',
+    museum      : '🏛️',
+    temple      : '🕌',
+    waterfall   : '💧',
+    island      : '🏝️',
+    lake        : '🌊',
+    forest      : '🌲',
+  };
+  return icons[type] || '📍';
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  const dropdown = document.getElementById('places-dropdown');
+  if (dropdown && !e.target.closest('#trip-destination')) {
+    dropdown.style.display = 'none';
+  }
+});
+
 // ===== INIT MAP =====
 function initMap() {
   map = L.map('map').setView([20.5937, 78.9629], 5);
